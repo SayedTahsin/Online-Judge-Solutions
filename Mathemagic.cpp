@@ -76,7 +76,7 @@ ll POW(ll b, ll p)
     ll r = 1;
     for (int i = 0; i < p; i++)
         r = (r * b) % MOD;
-    return (r % MOD);
+    return (r % MOD) - 1;
 }
 ll bin_expo(ll a, ll b)
 {
@@ -138,32 +138,23 @@ void solve()
     cin >> n;
     map<int, int> mp;
     vector<int> v(n + 1);
-    int mx = INT_MIN;
     for (int i = 1; i <= n; i++)
     {
         cin >> v[i];
         mp[v[i]]++;
-        mx = max(mx, v[i]);
     }
-    sort(v.begin() + 1, v.end());
-    int dp[n + 1] = {0};
-    for (int i = n; i >= 1; i--)
+    int dp[100001] = {0};
+    for (int i = 1; i <= 100000; i++)
     {
-        int c = 0;
-        if (v[i] == 1)
-            continue;
-        for (int j = v[i] * v[i]; j <= mx; j += v[i])
-            c += mp[j];
-        dp[i] = c;
+        for (int j = i * i; j <= 100000; j += i)
+        {
+            dp[i] += mp[j];
+        }
     }
     int ans = 0;
-
     for (int i = 1; i <= n; i++)
     {
-        if (v[i] == 1)
-            ans = (ans + POW(2, n) - 1) % MOD;
-        else
-            ans = (ans + POW(2, dp[i]) - 1) % MOD;
+        ans = (ans + bin_expo(2, dp[v[i]]) - 1) % MOD;
     }
     cout << ans << endl;
 }
