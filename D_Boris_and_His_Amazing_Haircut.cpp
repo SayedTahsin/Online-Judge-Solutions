@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -134,18 +134,81 @@ bool is_prime(ll n)
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    vector<int> v(n), b(n);
+    fore(v) cin >> x;
+    fore(b) cin >> x;
+    map<int, int> mp;
+    map<int, set<int>> ans;
+    int flag = 0;
+    stack<int> s;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (v[i] < b[i])
+        {
+            flag = 1;
+            break;
+        }
+        if (v[i] > b[i])
+        {
+            if (s.empty())
+                ans[b[i]].insert(n);
+            else if (s.top() > b[i])
+                ans[b[i]].insert(mp[s.top()]);
+            else
+            {
+                while (!s.empty() && s.top() <= b[i])
+                    s.pop();
+
+                if (s.empty())
+                    ans[b[i]].insert(n);
+                else
+                    ans[b[i]].insert(mp[s.top()]);
+            }
+        }
+        s.push(b[i]);
+        mp[b[i]] = i;
+    }
+    int q;
+    cin >> q;
+    map<int, int> ans1;
+    fore(ans)
+    {
+        ans1[x.first] = x.second.size();
+    }
+    // fore(ans1) cout << x.first << ' ' << x.second << endl;
+    while (q--)
+    {
+        int a;
+        cin >> a;
+        ans1[a]--;
+    }
+    if (flag)
+    {
+        NO;
+        return;
+    }
+    fore(ans1)
+    {
+        if (x.second > 0)
+        {
+            NO;
+            return;
+        }
+    }
+    YES;
 }
 
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
+    //     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
+    // #endif
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }
