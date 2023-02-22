@@ -134,7 +134,63 @@ bool is_prime(ll n)
 
 void solve()
 {
-    
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n), b(n);
+    vector<pii> v;
+    vector<pair<int, pii>> vp;
+    fore(a) cin >> x;
+    fore(b) cin >> x;
+    for (int i = 0; i < n; i++)
+    {
+        v.pb({a[i] + b[i], i});
+        vp.pb({a[i], {b[i], i}});
+    }
+    sort(all(v));
+    sort(all(vp));
+    // fore(v) cout << x.first << ' ' << x.second << endl;
+    // cout << endl;
+    // fore(vp) cout << x.first << ' ' << x.second.first << ' ' << x.second.second << endl;
+    if (vp[0].first > k)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    int idx = 0, ans = 1, s = vp[0].first;
+    fore(v)
+    {
+        if (x.second == idx)
+            continue;
+        if (s + x.first <= k)
+        {
+            s += x.first;
+            ans++;
+        }
+        else
+        {
+            int tmp1 = s, tmp2 = idx, tmp3 = ans;
+            s -= vp[idx].first;
+            int i = vp[idx].second.second;
+            int x = a[i] + b[i];
+            if (s + x <= k)
+                s += x;
+            else
+            {
+                idx = tmp2, s = tmp1, ans = tmp3;
+                continue;
+            }
+
+            idx++;
+            if (vp[idx].first + s <= k)
+            {
+                s += vp[idx].first;
+                ans++;
+            }
+            else
+                idx = tmp2, s = tmp1, ans = tmp3;
+        }
+    }
+    cout << ans << endl;
 }
 
 main()
@@ -145,7 +201,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }
