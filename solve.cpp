@@ -134,47 +134,14 @@ bool is_prime(ll n)
 
 void solve()
 {
-    string s;
-    while (cin >> s)
-    {
-        if (s.length() == 1)
-        {
-            cout << 0 << endl;
-            continue;
-        }
-        int n = s.length();
-        vector<int> v;
-        for (int i = 0, j = n - 1; i < n / 2; i++, j--)
-        {
-            int x = s[i] - s[j];
-            if (x < 0)
-                x += 26;
-            v.pb(x);
-        }
-        n = v.size();
-        int move = v[n - 1];
-        for (int i = n - 2; i >= 0; i--)
-        {
-            v[i] -= move;
-            if (v[i] < 0)
-            {
-                int x = abs(v[i]) / 26;
-                v[i] += x * 26;
-                if (v[i] < 0)
-                    v[i] += 26;
-            }
-            move += v[i];
-        }
-        cout << move << endl;
-    }
 }
 
 main()
 {
-    // #ifndef ONLINE_JUDGE
-    //     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    //     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-    // #endif
+#ifndef ONLINE_JUDGE
+    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
+    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
+#endif
     NFS;
     int t = 1;
     // cin >> t;
