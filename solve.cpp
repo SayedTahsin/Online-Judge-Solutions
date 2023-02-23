@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case #" << cs++ << ": "; }
+inline void CASE() { cout << "Case " << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -134,74 +134,50 @@ bool is_prime(ll n)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n), b(n);
-    vector<pii> v;
-    vector<pair<int, pii>> vp;
-    fore(a) cin >> x;
-    fore(b) cin >> x;
-    for (int i = 0; i < n; i++)
+    string s;
+    while (cin >> s)
     {
-        v.pb({a[i] + b[i], i});
-        vp.pb({a[i], {b[i], i}});
-    }
-    sort(all(v));
-    sort(all(vp));
-    // fore(v) cout << x.first << ' ' << x.second << endl;
-    // cout << endl;
-    // fore(vp) cout << x.first << ' ' << x.second.first << ' ' << x.second.second << endl;
-    if (vp[0].first > k)
-    {
-        cout << 0 << endl;
-        return;
-    }
-    int idx = 0, ans = 1, s = vp[0].first;
-    fore(v)
-    {
-        if (x.second == idx)
+        if (s.length() == 1)
+        {
+            cout << 0 << endl;
             continue;
-        if (s + x.first <= k)
-        {
-            s += x.first;
-            ans++;
         }
-        else
+        int n = s.length();
+        vector<int> v;
+        for (int i = 0, j = n - 1; i < n / 2; i++, j--)
         {
-            int tmp1 = s, tmp2 = idx, tmp3 = ans;
-            s -= vp[idx].first;
-            int i = vp[idx].second.second;
-            int x = a[i] + b[i];
-            if (s + x <= k)
-                s += x;
-            else
-            {
-                idx = tmp2, s = tmp1, ans = tmp3;
-                continue;
-            }
-
-            idx++;
-            if (vp[idx].first + s <= k)
-            {
-                s += vp[idx].first;
-                ans++;
-            }
-            else
-                idx = tmp2, s = tmp1, ans = tmp3;
+            int x = s[i] - s[j];
+            if (x < 0)
+                x += 26;
+            v.pb(x);
         }
+        n = v.size();
+        int move = v[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+        {
+            v[i] -= move;
+            if (v[i] < 0)
+            {
+                int x = abs(v[i]) / 26;
+                v[i] += x * 26;
+                if (v[i] < 0)
+                    v[i] += 26;
+            }
+            move += v[i];
+        }
+        cout << move << endl;
     }
-    cout << ans << endl;
 }
 
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
+    //     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
+    // #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }
