@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -134,32 +134,82 @@ bool is_prime(ll n)
 
 void solve()
 {
-    int x, y;
-    cin >> x >> y;
-    if (x == y)
+    int n, m, a;
+    cin >> n >> m;
+    int arr[n + 1][m + 1];
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            cin >> arr[i][j];
+    map<int, int> mp;
+    int badd = m / 2;
+    vector<int> taken(m + 1, 1);
+    int mx, f = 0;
+    for (int j = 1; j <= m / 2; j++)
     {
-        if (x % 2 == 0)
-            cout << "CHEFINA\n";
-        else
-            cout << "CHEF\n";
-    }
-    else
-    {
-        if (x > y)
+        if (!f)
+            mx = INT_MIN;
+        for (int i = 1; i <= n; i++)
         {
-            if (x - y == 1 && x % 2 != 0)
-                cout << "CHEFINA\n";
-            else
-                cout << "CHEF\n";
+            int x = arr[i][j];
+            if (taken[x] == 0)
+                continue;
+            mp[x]++;
+            if (f)
+            {
+                if (mp[x] > mx)
+                {
+                    taken[x] = 0;
+                    badd--;
+                    if (badd == 0)
+                        break;
+                    f--;
+                }
+            }
+            mx = max(mx, mp[x]);
+        }
+        if (badd == 0)
+            break;
+
+        set<int> s;
+        fore(mp)
+        {
+            if (taken[x.first] == 0)
+                continue;
+            if (x.second == mx)
+                s.insert(x.first);
+        }
+        if (s.size() == 1)
+        {
+            f--;
+            if (f < 0)
+                f = 0;
+            badd--;
+            taken[*s.begin()] = 0;
         }
         else
+            f++;
+        if (badd == 0)
+            break;
+    }
+    map<int, int> ans;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
         {
-            if (y - x == 1 && y % 2 == 0)
-                cout << "CHEF\n";
-            else
-                cout << "CHEFINA\n";
+            int x = arr[i][j];
+            if (taken[x])
+            {
+                ans[x]++;
+                break;
+            }
         }
     }
+    int answer = 0;
+    fore(ans)
+    {
+        answer = max(answer, x.second);
+    }
+    cout << answer << endl;
 }
 
 main()
@@ -170,7 +220,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }

@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -134,32 +134,13 @@ bool is_prime(ll n)
 
 void solve()
 {
-    int x, y;
-    cin >> x >> y;
-    if (x == y)
-    {
-        if (x % 2 == 0)
-            cout << "CHEFINA\n";
-        else
-            cout << "CHEF\n";
-    }
-    else
-    {
-        if (x > y)
-        {
-            if (x - y == 1 && x % 2 != 0)
-                cout << "CHEFINA\n";
-            else
-                cout << "CHEF\n";
-        }
-        else
-        {
-            if (y - x == 1 && y % 2 == 0)
-                cout << "CHEF\n";
-            else
-                cout << "CHEFINA\n";
-        }
-    }
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    map<char, int> mp;
+    fore(s) mp[x]++;
+    fore(mp)cout<<x.first<<'-'<<x.second<<endl;
 }
 
 main()
@@ -170,7 +151,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }
