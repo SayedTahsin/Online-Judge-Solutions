@@ -152,40 +152,54 @@ string to_binary(ll a)
 
 void solve()
 {
-    int arr[101][101];
-    arr[0][0] = 0, arr[0][1] = 1, arr[1][0] = 1;
-    for (int i = 2; i <= 10; i++)
-        arr[0][i] = arr[0][i - 1] + arr[0][i - 2];
-    for (int i = 2; i <= 10; i++)
-        arr[i][0] = arr[i - 1][0] + arr[i - 2][0];
+    int a, b, k;
+    cin >> a >> b >> k;
 
-    for (int i = 1; i <= 10; i++)
-        for (int j = 1; j <= 10; j++)
-            arr[i][j] = arr[i - 1][j] + arr[i][j - 1];
-
-    for (int i = 0; i <= 10; i++)
+    if (b <= 1)
+        cout << b - a + 1 << endl;
+    else
     {
-        for (int j = 0; j <= 10; j++)
-            cout << arr[i][j] << ' ';
-        cout << endl;
-    }
-    cout << endl;
-    for (int j = 0; j <= 10; j++)
-    {
-        for (int i = 1; i <= 10; i++)
+        if (k == 2)
         {
-            cout << arr[i][j] - arr[i - 1][j] << ' ';
+            int ans = 0;
+            for (int i = a; i <= b; i++)
+            {
+                if (is_pel(to_binary(i)))
+                    ans++;
+            }
+            cout << ans << endl;
         }
-        cout << endl;
+        else if (k == 3)
+        {
+            int ans = 0;
+            if (a <= 0 && 0 <= b)
+                ans++;
+            if (a <= 1 && 1 <= b)
+                ans++;
+            if (a <= 6643 && 6643 <= b)
+                ans++;
+            if (a <= 1422773 && 1422773 <= b)
+                ans++;
+            cout << ans << endl;
+        }
+        else
+        {
+            int ans = 0;
+            if (a <= 0 && 0 <= b)
+                ans++;
+            if (a <= 1 && 1 <= b)
+                ans++;
+            cout << ans << endl;
+        }
     }
 }
 
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
+    //     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
+    // #endif
     NFS;
     int t = 1;
     // cin >> t;

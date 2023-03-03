@@ -131,53 +131,45 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-    int arr[101][101];
-    arr[0][0] = 0, arr[0][1] = 1, arr[1][0] = 1;
-    for (int i = 2; i <= 10; i++)
-        arr[0][i] = arr[0][i - 1] + arr[0][i - 2];
-    for (int i = 2; i <= 10; i++)
-        arr[i][0] = arr[i - 1][0] + arr[i - 2][0];
-
-    for (int i = 1; i <= 10; i++)
-        for (int j = 1; j <= 10; j++)
-            arr[i][j] = arr[i - 1][j] + arr[i][j - 1];
-
-    for (int i = 0; i <= 10; i++)
+    int n, m, q, a, b;
+    cin >> n >> m >> q;
+    map<int, int> r, c;
+    map<pii, int> mp;
+    while (q--)
     {
-        for (int j = 0; j <= 10; j++)
-            cout << arr[i][j] << ' ';
-        cout << endl;
+        cin >> a >> b;
+        r[a]++, c[b]++;
+        mp[{a, b}]++;
     }
-    cout << endl;
-    for (int j = 0; j <= 10; j++)
+    map<int, vi, greater<int>> row, col;
+
+    fore(r) row[x.second].pb(x.first);
+    fore(c) col[x.second].pb(x.first);
+
+    set<int, greater<int>> ans;
+    auto it1 = row.begin();
+    auto it2 = col.begin();
+    int res = it1->first + it2->first;
+    vector<int> v1 = it1->second;
+    vector<int> v2 = it2->second;
+
+    for (int i = 0; i < (int)v1.size(); i++)
     {
-        for (int i = 1; i <= 10; i++)
+        for (int j = 0; j < (int)v2.size(); j++)
         {
-            cout << arr[i][j] - arr[i - 1][j] << ' ';
+            a = v1[i], b = v2[j];
+            int xtra = mp[{a, b}];
+            if (!xtra)
+            {
+                cout << res << endl;
+                return;
+            }
         }
-        cout << endl;
     }
+    cout << res - 1 << endl;
 }
 
 main()
