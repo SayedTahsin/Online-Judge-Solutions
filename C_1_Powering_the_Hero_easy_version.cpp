@@ -134,30 +134,25 @@ bool is_prime(ll n)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    string s, t;
-    cin >> s >> t;
-    map<char, int> mp1, mp2;
-    fore(s) mp1[x]++;
-    fore(t) mp2[x]++;
-    if (mp1 == mp2)
+    int n, a;
+    cin >> n;
+    priority_queue<int> q;
+    int s = 0;
+    for (int i = 0; i < n; i++)
     {
-        for (int i = 0; s[i]; i++)
+        cin >> a;
+        if (a == 0)
         {
-            if (s[i] != t[i])
+            if (!q.empty())
             {
-                if (i + k >= n && i - k < 0)
-                {
-                    NO;
-                    return;
-                }
+                s += q.top();
+                q.pop();
             }
         }
-        YES;
+        else
+            q.push(a);
     }
-    else
-        NO;
+    cout << s << endl;
 }
 
 main()

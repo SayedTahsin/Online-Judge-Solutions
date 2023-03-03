@@ -136,28 +136,25 @@ void solve()
 {
     int n, k;
     cin >> n >> k;
-    string s, t;
-    cin >> s >> t;
-    map<char, int> mp1, mp2;
-    fore(s) mp1[x]++;
-    fore(t) mp2[x]++;
-    if (mp1 == mp2)
+    string s;
+    cin >> s;
+    map<char, int> mp;
+    fore(s) mp[x]++;
+    int ans = 0;
+    for (char i = 'A'; i <= 'Z'; i++)
     {
-        for (int i = 0; s[i]; i++)
-        {
-            if (s[i] != t[i])
-            {
-                if (i + k >= n && i - k < 0)
-                {
-                    NO;
-                    return;
-                }
-            }
-        }
-        YES;
+        char a = i + 32;
+        char A = i;
+        int mn = min(mp[A], mp[a]);
+        ans += mn;
+        mp[A] -= mn, mp[a] -= mn;
+        int mx = max(mp[a], mp[A]);
+        int pot = mx / 2;
+        mn = min(pot, k);
+        ans += mn;
+        pot -= mn, k -= mn;
     }
-    else
-        NO;
+    cout << ans << endl;
 }
 
 main()

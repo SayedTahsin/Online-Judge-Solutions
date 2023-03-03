@@ -134,27 +134,49 @@ bool is_prime(ll n)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    string s, t;
-    cin >> s >> t;
-    map<char, int> mp1, mp2;
-    fore(s) mp1[x]++;
-    fore(t) mp2[x]++;
-    if (mp1 == mp2)
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    map<char, int> mp;
+    fore(s)
     {
-        for (int i = 0; s[i]; i++)
+        if (x >= 'A' && x <= 'Z')
+            x += 32;
+        mp[x]++;
+    }
+    if (mp.size() == 4)
+    {
+        if (mp['m'] >= 1 && mp['e'] >= 1 && mp['o'] >= 1 && mp['w'] >= 1)
         {
-            if (s[i] != t[i])
+            string x = "meow";
+            int id = 0;
+            if (s[0] == 'm')
             {
-                if (i + k >= n && i - k < 0)
+                for (int i = 0; s[i]; i++)
                 {
-                    NO;
-                    return;
+                    if (s[i] != x[id])
+                    {
+                        id++;
+                        if (id == x.size())
+                        {
+                            NO;
+                            return;
+                        }
+                        if (s[i] != x[id])
+                        {
+                            NO;
+                            return;
+                        }
+                    }
                 }
+                YES;
             }
+            else
+                NO;
         }
-        YES;
+        else
+            NO;
     }
     else
         NO;
