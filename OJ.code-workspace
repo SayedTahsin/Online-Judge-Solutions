@@ -24,7 +24,8 @@
 			"regex": "cpp",
 			"valarray": "cpp",
 			"random": "cpp",
-			"iosfwd": "cpp"
+			"iosfwd": "cpp",
+			"cmath": "cpp"
 		}
 	}
 }

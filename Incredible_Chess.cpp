@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -131,28 +131,17 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-   
+    int n, a, b;
+    cin >> n >> a >> b;
+    for (int i = 1; i <= n; i++)
+    {
+        //!        a ≤ i - 1 and n - i ≤ b
+        if (a <= i - 1 and n - i <= b)
+            cout << i << endl;
+    }
 }
 
 main()
@@ -163,7 +152,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }

@@ -44,7 +44,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 #define PQiimx priority_queue<pair<int, int>>
 #define PQllmx priority_queue<pair<ll, ll>>
 #define PQ priority_queue<int>
-#define PQmn priority_queue<int, greater<int>>
+#define PQmn priority_queue<int, vector<int>, greater<int>>
 //!--------
 #define FILL(x, y) memset(x, y, sizeof(x))
 #define clr(x, y) memset(x, 0, sizeof(x))
@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,28 +131,61 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-   
+    int n, a;
+    cin >> n;
+    string s;
+    vector<int> v;
+    char ch;
+    for (int i = 0; i < 2 * n; i++)
+    {
+        cin >> ch;
+        s += ch;
+        if (ch == '-')
+        {
+            cin >> a;
+            v.pb(a);
+        }
+    }
+    PQmn q;
+    vector<int> ans;
+    int j = n - 1;
+    for (int i = s.length() - 1; i >= 0; i--)
+    {
+        if (s[i] == '+')
+        {
+            if (q.empty())
+            {
+                NO;
+                return;
+            }
+            else
+            {
+                ans.pb(q.top());
+                q.pop();
+            }
+        }
+        else
+        {
+            if (q.empty())
+                q.push(v[j--]);
+            else
+            {
+                if (q.top() < v[j])
+                {
+                    NO;
+                    return;
+                }
+                else
+                    q.push(v[j--]);
+            }
+        }
+    }
+    YES;
+    reverse(all(ans));
+    print(ans);
 }
 
 main()
@@ -163,7 +196,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }
