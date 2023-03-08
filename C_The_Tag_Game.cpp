@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,28 +131,58 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-    
+    int n, x;
+    cin >> n >> x;
+    vector<int> v[n + 5];
+    for (int i = 1; i < n; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        v[a].pb(b);
+        v[b].pb(a);
+    }
+    int vis1[n + 1];
+    FILL(vis1, -1);
+    vis1[1] = 0;
+    queue<int> q;
+    q.push(1);
+    while (!q.empty())
+    {
+        int f = q.front();
+        q.pop();
+        fore(v[f])
+        {
+            if (vis1[x] == -1)
+            {
+                vis1[x] = vis1[f] + 1;
+                q.push(x);
+            }
+        }
+    }
+    q.push(x);
+    int vis2[n + 1];
+    FILL(vis2, -1);
+    vis2[x] = 0;
+    int mx = 0;
+    while (!q.empty())
+    {
+        int f = q.front();
+        q.pop();
+        mx = max(mx, vis1[f]);
+        fore(v[f])
+        {
+            if (vis2[x] == -1)
+            {
+                vis2[x] = vis2[f] + 1;
+                if (vis2[x] < vis1[x])
+                    q.push(x);
+            }
+        }
+    }
+    cout << mx * 2 << endl;
 }
 
 main()
@@ -163,7 +193,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }
