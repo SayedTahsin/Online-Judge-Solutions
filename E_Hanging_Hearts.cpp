@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,27 +131,54 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
+vector<int> ed[100001];
+int c = 0;
+bool vis[100001];
+void f(int u)
 {
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
+    vis[u] = 1;
+    // cout << u << endl;
+    if (ed[u].size() > 2 || u == 1)
+        return;
+    c++;
+    fore(ed[u])
     {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
+        if (vis[x] == 0)
+            f(x);
     }
-    return s.empty() ? "0" : s;
 }
-
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<int> v(n + 5);
+    for (int i = 1; i < n; i++)
+        cin >> v[i];
+    for (int i = 1; i < n; i++)
+        ed[v[i]].pb(i + 1), ed[i + 1].pb(v[i]);
+    int ans = 0;
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     cout << i << '-';
+    //     print(ed[i]);
+    //     cout << endl;
+    // }
+    int chk = ed[1].size() == 1;
+    for (int i = 2; i <= n; i++)
+    {
+        if (ed[i].size() == 2)
+            chk++;
+        if (ed[i].size() == 1 && vis[i] == 0)
+        {
+            c = 0;
+            f(i);
+            // cout << endl;
+            ans += c;
+        }
+    }
+    if (chk == n - 1)
+        ans++;
+    cout << ans << endl;
 }
 
 main()
@@ -162,7 +189,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }
