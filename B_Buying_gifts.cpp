@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,28 +131,46 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-    
+    int n, a, b;
+    cin >> n;
+    vector<pii> v;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a >> b;
+        v.pb({a, b});
+    }
+    sort(all(v));
+    // fore(v) cout << x.first << ' ' << x.second << endl;
+    // cout << endl;
+    set<int> s;
+    vector<int> pre(n + 1, -INF);
+    for (int i = n - 1; i >= 0; i--)
+        pre[i] = max(pre[i + 1], v[i].second);
+    int ans = INF;
+    // print(pre);
+    // cout << endl;
+    for (int i = 0; i < n; i++)
+    {
+        a = v[i].first, b = v[i].second;
+        ans = min(ans, abs(pre[i + 1] - a));
+        if (!s.empty())
+        {
+            auto it = s.lower_bound(a);
+            if (it == s.end())it--;
+            if (*it > pre[i + 1]) 
+                ans = min(ans, abs(*it - a));
+            
+            if (it != s.begin())it--;
+            if (*it > pre[i + 1])
+                ans = min(ans, abs(*it - a));
+        }
+        s.insert(b);
+        // cout << ans << endl;
+    }
+    cout << ans << endl;
 }
 
 main()
