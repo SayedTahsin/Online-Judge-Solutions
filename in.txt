@@ -1,13 +1,8 @@
-12
-a
-aab
-abb
-abc
-aabb
-aabbb
-aaabb
-abbb
-abbbb
-abbcc
-eaga
-ffcaba
+7 2
+11 11
+9 11
+7 8
+8 9
+7 8
+9 11
+7 9

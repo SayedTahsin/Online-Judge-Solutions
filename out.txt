@@ -1,12 +1,2 @@
-a
-aba
-bab
-bca
-abba
-abbba
-ababa
-bbab
-bbabb
-bbcca
-agea
-acffba
+3
+7 4 1 
