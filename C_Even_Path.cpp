@@ -62,7 +62,7 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,69 +131,23 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    for (int i = 0; i < m; i++)
-    {
-        if (i % 2 == 0)
-        {
-
-            for (int i = 1; i < 3 * n; i++)
-            {
-                for (int j = 1; j <= 3 * n; j++)
-                {
-                    if (i + j == 3 * n + 1 || i + j + 2 == 3 * n + 1)
-                        cout << "*";
-                    else
-                        cout << ".";
-                }
-                cout << endl;
-            }
-        }
-        else
-        {
-            for (int i = 1; i <= 3 * n; i++)
-            {
-                for (int j = 1; j <= 3 * n; j++)
-                {
-                    if (i == j || j - 2 == i)
-                        cout << "*";
-                    else
-                        cout << ".";
-                }
-                cout << endl;
-            }
-        }
-    }
+    int n, q;
+    cin >> n >> q;
+    vector<int> a(n), b(n);
+    fore(a) cin >> x;
+    fore(b) cin >> x;
+    
 }
 
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
+    //     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
+    // #endif
     NFS;
     int t = 1;
     // cin >> t;
