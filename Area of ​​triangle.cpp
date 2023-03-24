@@ -152,14 +152,21 @@ string to_binary(ll a)
 
 void solve()
 {
-    
+    int x1, x2, x3, y1, y2, y3;
+    cin >> x1 >> y1;
+    cin >> x2 >> y2;
+    cin >> x3 >> y3;
+
+    double ans = x1 * (y2 - y3);
+    ans -= x2 * (y1 - y3);
+    ans += x3 * (y1 - y2);
+    ans = 0.5 * ans;
+    cout << fixed << setprecision(15) << fabs(ans) << endl;
 }
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
+    freopen("area1.in", "r", stdin);
+    freopen("area1.out", "w", stdout);
 
     NFS;
     int t = 1;
