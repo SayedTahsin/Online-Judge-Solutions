@@ -152,42 +152,8 @@ string to_binary(ll a)
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    for (int i = 0; i < m; i++)
-    {
-        if (i % 2 == 0)
-        {
-
-            for (int i = 1; i < 3 * n; i++)
-            {
-                for (int j = 1; j <= 3 * n; j++)
-                {
-                    if (i + j == 3 * n + 1 || i + j + 2 == 3 * n + 1)
-                        cout << "*";
-                    else
-                        cout << ".";
-                }
-                cout << endl;
-            }
-        }
-        else
-        {
-            for (int i = 1; i <= 3 * n; i++)
-            {
-                for (int j = 1; j <= 3 * n; j++)
-                {
-                    if (i == j || j - 2 == i)
-                        cout << "*";
-                    else
-                        cout << ".";
-                }
-                cout << endl;
-            }
-        }
-    }
+    
 }
-
 main()
 {
 #ifndef ONLINE_JUDGE
@@ -196,7 +162,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }

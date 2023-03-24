@@ -20,26 +20,21 @@ int main()
     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
 #endif
 
-    int n = get_random_in_range(1, 100000);
-    int m = get_random_in_range(1, min((n * (n + 1)) / 2, 100000));
-    n = 100000, m = 100000;
+    int n = get_random_in_range(1, 100);
+    int m = get_random_in_range(1, 500);
+    int c = 0;
     cout << n << ' ' << m << endl;
-    for (int i = 0; i < m; i++)
+    cout << m << ' ' << m << ' ' << m << ' ' << m << ' ';
+    for (int i = 4; i < n; i++)
     {
-        int a = get_random_in_range(1, n);
-        int b = get_random_in_range(1, n);
-        while (a == b)
-        {
-            b = get_random_in_range(1, n);
-        }
-        cout << a << ' ' << b << endl;
+        int a = get_random_in_range(1, 500);
+        cout << a << ' ';
+        if (a == m)
+            c++;
     }
-    int q = get_random_in_range(1, 100000);
-    q = 100000;
-    cout << q << endl;
-    while (q--)
-    {
-        cout << get_random_in_range(1, n) << endl;
-    }
-    return 0;
+    cout << endl;
+    // if (c >= 4)
+    cout << "Yes\n";
+    // else
+    // cout << "No\n";
 }
