@@ -57,14 +57,12 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 #define lcm(x, y) x *(y / gcd(x, y))
 #define preci(x) fixed << setprecision(x)
 #define PI (acos(-1.0))
-#define theta(x) x *acos(-1.0) / 180.0     /// degree to radian
-#define thetainv(x) x * 180.0 / acos(-1.0) /// radian to degree
 #define SZ(x) (int)x.size()
 #define bug cout << "*_*\n"
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -118,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -133,39 +131,70 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-string to_binary(ll a)
-{
-    string s;
-    while (a)
-    {
-        s = ((a % 2) ? "1" : "0") + s;
-        a /= 2;
-    }
-    return s.empty() ? "0" : s;
-}
 
 void solve()
 {
-    
+    int n, m;
+    cin >> n >> m;
+    vector<int> v(n);
+    fore(v) cin >> x;
+    sort(all(v));
+
+    vector<int> divisors[n];
+    for (int i = 0; i < n; i++)
+    {
+        int x = v[i];
+        for (int j = 1; j * j <= x && j <= m; j++)
+        {
+            if (x % j == 0)
+            {
+                divisors[i].push_back(j);
+                int z = x / j;
+                if (z <= m && z != j)
+                    divisors[i].push_back(z);
+            }
+        }
+    }
+    int i = 0, j = 0;
+    int mp[m + 1] = {0};
+    int cnt = 0;
+    int ans = INF;
+    while (j < n)
+    {
+        fore(divisors[j])
+        {
+            mp[x]++;
+            if (mp[x] == 1)
+                cnt++;
+        }
+        while (cnt == m)
+        {
+            ans = min(ans, v[j] - v[i]);
+            fore(divisors[i])
+            {
+                mp[x]--;
+                if (mp[x] == 0)
+                    cnt--;
+            }
+            i++;
+        }
+        j++;
+    }
+    if (ans == INF)
+        cout << -1 << endl;
+    else
+        cout << ans << endl;
 }
+
 main()
 {
 #ifndef ONLINE_JUDGE
     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
 #endif
-
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }
