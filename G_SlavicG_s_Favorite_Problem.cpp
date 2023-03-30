@@ -57,14 +57,12 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 #define lcm(x, y) x *(y / gcd(x, y))
 #define preci(x) fixed << setprecision(x)
 #define PI (acos(-1.0))
-#define theta(x) x *acos(-1.0) / 180.0     /// degree to radian
-#define thetainv(x) x * 180.0 / acos(-1.0) /// radian to degree
 #define SZ(x) (int)x.size()
 #define bug cout << "*_*\n"
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -118,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -133,27 +131,66 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
+int n, a, b, x, y, w;
+int flag = 0;
+set<int> s;
+vector<pair<int, int>> v[100003];
+map<int, int> mp;
+void f2(int u, int val, int par)
 {
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
+    if (mp[val] == 1)
+    {
+        flag = 1;
+        return;
+    }
+    fore(v[u])
+    {
+        if (x.first == par || x.first == b)
+            continue;
+        f2(x.first, (val ^ x.second), u);
+    }
+}
+void f1(int u, int val, int par)
+{
+    if (u != b)
+        mp[val] = 1;
+    fore(v[u])
+    {
+        if (x.first == par)
+            continue;
+        f1(x.first, (val ^ x.second), u);
+    }
 }
 void solve()
 {
+    cin >> n >> a >> b;
+    for (int i = 1; i <= n - 1; i++)
+    {
+        cin >> x >> y >> w;
+        v[x].pb({y, w}), v[y].pb({x, w});
+    }
+    f1(b, 0, -1);
+    f2(a, 0, -1);
+
+    if (flag)
+        YES;
+    else
+        NO;
+    flag = 0;
+    for (int i = 1; i <= n; i++)
+        v[i].clear();
+    mp.clear();
 }
+
 main()
 {
 #ifndef ONLINE_JUDGE
     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
 #endif
-
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }
