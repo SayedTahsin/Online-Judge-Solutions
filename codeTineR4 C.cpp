@@ -144,66 +144,36 @@ bool is_pel(string s)
 
 void solve()
 {
-    int q;
-    cin >> q;
-    int h = -1;
-    pair<int, int> p = {-1, -1};
-    int a, b, n;
-    vector<int> ans;
-    while (q--)
+    int n, c, d;
+    cin >> n >> c >> d;
+    map<int, int> mp;
+    vector<int> v(n);
+    fore(v) cin >> x, mp[x]++;
+    int z = 0;
+    fore(mp)
     {
-        int op;
-        cin >> op;
-        if (op == 1)
-        {
-            cin >> a >> b >> n;
-            int h2 = (a - b) * (n - 1) + a;
-            int h1 = h2 - b;
-            if (p.first == -1 && p.second == -1)
-            {
-                p.first = h1, p.second = h2;
-                ans.pb(1);
-            }
-            else
-            {
-                if (p.first > h2 || h1 > p.second)
-                    ans.pb(0);
-                else
-                {
-                    p.first = max(h1, p.first);
-                    p.second = min(h2, p.second);
-                    ans.pb(1);
-                }
-            }
-        }
-        else
-        {
-
-            // cout << p.first << ' ' << p.second << endl;
-            cin >> a >> b;
-            if (a >= p.first)
-                ans.pb(1);
-            else
-            {
-                int x = (p.first / (a - b)) * (a - b);
-                int ans1 = p.first / (a - b);
-                if (x < p.first)
-                    ans1++;
-
-                x = (p.second / (a - b)) * (a - b);
-                int ans2 = p.second / (a - b);
-                if (x < p.second)
-                    ans2++;
-
-                if (ans1 != ans2)
-                    ans.pb(-1);
-                else
-                    ans.pb(ans1);
-            }
-        }
+        int f = x.second - 1;
+        z += c * f;
     }
-    print(ans);
-    cout << endl;
+    auto it = mp.begin();
+    vector<int> ans;
+    ans.pb(0);
+    fore(mp) ans.pb(x.first);
+    int res = INF;
+    // print(ans);
+    // cout << endl;
+    // cout << z << endl;
+    for (int i = 1; i < ans.size(); i++)
+    {
+        int x = (ans[i] - i) * d;
+        int y = ((int)ans.size() - 1 - i) * c;
+        res = min(res, x + y);
+        // cout << ans[i] << ' ' << x + y << endl;
+    }
+    res += z;
+    int last = n * c + d;
+    res = min(res, last);
+    cout << res << endl;
 }
 main()
 {

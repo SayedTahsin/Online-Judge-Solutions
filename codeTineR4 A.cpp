@@ -144,66 +144,19 @@ bool is_pel(string s)
 
 void solve()
 {
-    int q;
-    cin >> q;
-    int h = -1;
-    pair<int, int> p = {-1, -1};
-    int a, b, n;
-    vector<int> ans;
-    while (q--)
+    int n, flag = 0;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
     {
-        int op;
-        cin >> op;
-        if (op == 1)
-        {
-            cin >> a >> b >> n;
-            int h2 = (a - b) * (n - 1) + a;
-            int h1 = h2 - b;
-            if (p.first == -1 && p.second == -1)
-            {
-                p.first = h1, p.second = h2;
-                ans.pb(1);
-            }
-            else
-            {
-                if (p.first > h2 || h1 > p.second)
-                    ans.pb(0);
-                else
-                {
-                    p.first = max(h1, p.first);
-                    p.second = min(h2, p.second);
-                    ans.pb(1);
-                }
-            }
-        }
-        else
-        {
-
-            // cout << p.first << ' ' << p.second << endl;
-            cin >> a >> b;
-            if (a >= p.first)
-                ans.pb(1);
-            else
-            {
-                int x = (p.first / (a - b)) * (a - b);
-                int ans1 = p.first / (a - b);
-                if (x < p.first)
-                    ans1++;
-
-                x = (p.second / (a - b)) * (a - b);
-                int ans2 = p.second / (a - b);
-                if (x < p.second)
-                    ans2++;
-
-                if (ans1 != ans2)
-                    ans.pb(-1);
-                else
-                    ans.pb(ans1);
-            }
-        }
+        int a;
+        cin >> a;
+        if (i >= a)
+            flag = 1;
     }
-    print(ans);
-    cout << endl;
+    if (flag)
+        YES;
+    else
+        NO;
 }
 main()
 {
