@@ -144,6 +144,7 @@ bool is_pel(string s)
 
 void solve()
 {
+    
 }
 main()
 {
