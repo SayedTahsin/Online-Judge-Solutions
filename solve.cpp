@@ -97,8 +97,8 @@ inline ll modSub(ll a, ll b) { return mod(mod(a) - mod(b)); }
 inline ll modMul(ll a, ll b) { return mod(mod(a) * mod(b)); }
 inline ll modInv(ll a) { return bin_expo(a, MOD - 2); }
 //!---------
-// int dx[] = {0, 0, -1, 1};
-// int dy[] = {1, -1, 0, 0};
+int dx[] = {0, 0, -1, 1};
+int dy[] = {1, -1, 0, 0};
 // int dxk[] = {-2, -2, -1, -1, 1, 2, 2, 1};
 // int dyk[] = {1, -1, 2, -2, 2, 1, -1, -2};
 // int dx1[] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -141,6 +141,7 @@ bool is_pel(string s)
             return false;
     return true;
 }
+
 void solve()
 {
 }
