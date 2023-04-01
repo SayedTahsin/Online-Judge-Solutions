@@ -144,6 +144,66 @@ bool is_pel(string s)
 
 void solve()
 {
+    int q;
+    cin >> q;
+    int h = -1;
+    pair<int, int> p = {-1, -1};
+    int a, b, n;
+    vector<int> ans;
+    while (q--)
+    {
+        int op;
+        cin >> op;
+        if (op == 1)
+        {
+            cin >> a >> b >> n;
+            int x1 = 0;
+            int h1 = 1;
+            if (n >= 2)
+                h1 = (a - b) * (n - 2) + a + 1;
+            int h2 = (a - b) * (n - 1) + a;
+            if (p.first == -1 && p.second == -1)
+            {
+                p.first = h1, p.second = h2;
+                ans.pb(1);
+            }
+            else
+            {
+                if (p.first > h2 || h1 > p.second)
+                    ans.pb(0);
+                else
+                {
+                    p.first = max(h1, p.first);
+                    p.second = min(h2, p.second);
+                    ans.pb(1);
+                }
+            }
+        }
+        else
+        {
+            cin >> a >> b;
+            if (p.first == -1 && p.second == -1)
+            {
+                ans.pb(-1);
+                continue;
+            }
+            if (a >= p.second)
+                ans.pb(1);
+            else
+            {
+                int h1 = p.first - a;
+                int h2 = p.second - a;
+                int l1 = (h1 + a - b - 1) / (a - b);
+                int l2 = (h2 + a - b - 1) / (a - b);
+                if (l1 == l2)
+                    ans.pb(max(1LL, l1 + 1));
+                else
+                    ans.pb(-1);
+            }
+        }
+    }
+    print(ans);
+    cout << endl;
 }
 main()
 {
