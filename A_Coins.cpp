@@ -144,7 +144,22 @@ bool is_pel(string s)
 
 void solve()
 {
-    
+    int n, k;
+    cin >> n >> k;
+    if (n % 2 == 0)
+    {
+        YES;
+        return;
+    }
+    if (n % k == 0)
+    {
+        YES;
+        return;
+    }
+    if (k % 2 != 0)
+        YES;
+    else
+        NO;
 }
 main()
 {
