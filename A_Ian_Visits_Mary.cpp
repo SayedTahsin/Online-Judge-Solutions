@@ -144,47 +144,18 @@ bool is_pel(string s)
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    fore(v) cin >> x;
-
-    if (is_sorted(all(v)))
+    int a, b;
+    cin >> a >> b;
+    if (a == 1 || b == 1)
     {
-        YES;
-        return;
+        cout << 1 << endl;
+        cout << a << ' ' << b << endl;
     }
-
-    if (n % 2 != 0)
-        YES;
     else
     {
-        for (int i = n - 1; i >= 2; i -= 2)
-        {
-            if (v[i] < v[i - 1])
-            {
-                int x = v[i - 1] - v[i];
-                v[i - 1] -= x;
-                v[i - 2] -= x;
-            }
-            else
-            {
-                int x = v[i] - v[i - 1];
-                v[i - 1] += x;
-                v[i - 2] += x;
-            }
-        }
-        int f = 0;
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] <= v[i + 1])
-                f++;
-        }
-        if (f == n / 2)
-            YES;
-        else
-            NO; // print(v);
-        // cout << endl;
+        cout << 2 << endl;
+        cout << 1 << ' ' << b - 1 << endl;
+        cout << a << ' ' << b << endl;
     }
 }
 main()

@@ -146,46 +146,39 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    fore(v) cin >> x;
-
-    if (is_sorted(all(v)))
+    int arr[2][n];
+    int a = 2 * n, b = 2;
+    for (int i = 0; i < n; i++)
     {
-        YES;
-        return;
-    }
-
-    if (n % 2 != 0)
-        YES;
-    else
-    {
-        for (int i = n - 1; i >= 2; i -= 2)
+        if (i % 2 == 0)
         {
-            if (v[i] < v[i - 1])
-            {
-                int x = v[i - 1] - v[i];
-                v[i - 1] -= x;
-                v[i - 2] -= x;
-            }
-            else
-            {
-                int x = v[i] - v[i - 1];
-                v[i - 1] += x;
-                v[i - 2] += x;
-            }
+            arr[0][i] = a;
+            a -= 2;
         }
-        int f = 0;
-        for (int i = 0; i < n; i += 2)
-        {
-            if (v[i] <= v[i + 1])
-                f++;
-        }
-        if (f == n / 2)
-            YES;
         else
-            NO; // print(v);
-        // cout << endl;
+        {
+            arr[0][i] = b;
+            b += 2;
+        }
     }
+    a = 1;
+    for (int i = 0; i < n; i += 2)
+    {
+        arr[1][i] = a;
+        a += 2;
+    }
+    a = 2 * n - 1;
+    for (int i = n - 1; i >= 0; i -= 2)
+    {
+        arr[1][i] = a;
+        a -= 2;
+    }
+    for (int i = 0; i < n; i++)
+        cout << arr[0][i] << ' ';
+    cout << endl;
+    for (int i = 0; i < n; i++)
+        cout << arr[1][i] << ' ';
+    cout << endl;
 }
 main()
 {
