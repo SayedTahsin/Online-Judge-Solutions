@@ -143,7 +143,6 @@ bool is_pel(string s)
 }
 
 const int N = 2 * 1e5 + 5;
-
 int arr[N];
 int Tree[4 * N];
 void init(int node, int b, int e)
@@ -153,9 +152,7 @@ void init(int node, int b, int e)
         Tree[node] = arr[b];
         return;
     }
-    int left = node * 2;
-    int right = node * 2 + 1;
-    int mid = (b + e) / 2;
+    int left = node * 2, right = node * 2 + 1, mid = (b + e) / 2;
     init(left, b, mid);
     init(right, mid + 1, e);
     Tree[node] = max(Tree[left], Tree[right]);
@@ -166,14 +163,12 @@ int query(int node, int b, int e, int i, int j)
         return 0;
     if (b >= i && e <= j) // relevent segment
         return Tree[node];
-    int left = node * 2; // aro vangte hobe
-    int right = node * 2 + 1;
-    int mid = (b + e) / 2;
+    // aro vangte hobe
+    int left = node * 2, right = node * 2 + 1, mid = (b + e) / 2;
     int p1 = query(left, b, mid, i, j);
     int p2 = query(right, mid + 1, e, i, j);
-    return p1 + p2; // left and right side r sum
+    return max(p1, p2); // left and right side r sum
 }
-
 void solve()
 {
     FILL(Tree, -1);
@@ -186,31 +181,45 @@ void solve()
     cin >> q;
     while (q--)
     {
-        int x1, y1, x2, y2, k;
-        cin >> x1 >> y1 >> x2 >> y2 >> k;
-        int x = y2 - y1;
-        if (x % k == 0)
+        int a, b, c, d, k;
+        cin >> a >> b >> c >> d >> k;
+        if (a == c && b == d)
         {
-            x = query(1, y1 + 1, y2 - 1, y1 + 1, y2 - 1);
-            x = x - x1;
-            if (x < 0)
-                YES;
-            else
-            {
-                x += k - 1;
-                x /= k;
-                x = x * k;
-                x += x1;
-                if (x <= n)
-                    YES;
-                else
-                    NO;
-            }
+            YES;
+            continue;
         }
-        else
+        int x = abs(b - d);
+        if (x % k != 0)
         {
             NO;
+            continue;
         }
+        if (b == d)
+        {
+            x = abs(a - c);
+            if (x % k != 0)
+                NO;
+            else
+                YES;
+            continue;
+        }
+        if (b > d)
+            swap(b, d);
+        int mx = query(1, 1, m, b + 1, d - 1);
+        mx++;
+        x = mx - a;
+        x += k - 1, x /= k;
+        x = k * x + a;
+        if (x > n)
+        {
+            NO;
+            continue;
+        }
+        x = c - x;
+        if (x % k == 0)
+            YES;
+        else
+            NO;
     }
 }
 main()
