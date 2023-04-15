@@ -57,14 +57,12 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 #define lcm(x, y) x *(y / gcd(x, y))
 #define preci(x) fixed << setprecision(x)
 #define PI (acos(-1.0))
-#define theta(x) x *acos(-1.0) / 180.0     /// degree to radian
-#define thetainv(x) x * 180.0 / acos(-1.0) /// radian to degree
 #define SZ(x) (int)x.size()
 #define bug cout << "*_*\n"
 //!-------
 #define EPS (1e-6)
 const ll INF = 1e18 + 5;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
 bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
 bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
@@ -97,8 +95,8 @@ inline ll modSub(ll a, ll b) { return mod(mod(a) - mod(b)); }
 inline ll modMul(ll a, ll b) { return mod(mod(a) * mod(b)); }
 inline ll modInv(ll a) { return bin_expo(a, MOD - 2); }
 //!---------
-int dx[] = {0, 0, -1, 1};
-int dy[] = {1, -1, 0, 0};
+// int dx[] = {0, 0, -1, 1};
+// int dy[] = {1, -1, 0, 0};
 // int dxk[] = {-2, -2, -1, -1, 1, 2, 2, 1};
 // int dyk[] = {1, -1, 2, -2, 2, 1, -1, -2};
 // int dx1[] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -118,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -133,41 +131,83 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-int MEX(vector<int> &v)
-{
-    set<int> s;
-    fore(v) s.insert(x);
-    int m = 0;
-    fore(s)
-    {
-        if (x == m)
-            m++;
-        else
-            break;
-    }
-    return m;
-}
-//!-------------------------------------------
+int arr[1000][1000];
+int n, m;
+int dp[1000][1000];
 
+int f1(int i, int j)
+{
+    if (i == n - 1 && j == m - 1)
+        return arr[i][j];
+
+    if (dp[i][j] != -INF)
+        return dp[i][j];
+
+    int a, b;
+    a = b = -INF;
+    if (i + 1 < n)
+        a = f1(i + 1, j) + arr[i][j];
+    if (j + 1 < m)
+        b = f1(i, j + 1) + arr[i][j];
+
+    return dp[i][j] = max(a, b);
+}
+
+int f2(int i, int j)
+{
+    if (i == n - 1 && j == m - 1)
+        return arr[i][j];
+
+    if (dp[i][j] != INF)
+        return dp[i][j];
+
+    int a, b;
+    a = b = INF;
+    if (i + 1 < n)
+        a = f2(i + 1, j) + arr[i][j];
+    if (j + 1 < m)
+        b = f2(i, j + 1) + arr[i][j];
+
+    return dp[i][j] = min(a, b);
+}
 void solve()
 {
-    
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> arr[i][j];
+    if ((m + n) % 2 == 0)
+    {
+        NO;
+        return;
+    }
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            dp[i][j] = -INF;
+    int a = f1(0, 0);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            dp[i][j] = INF;
+    int b = f2(0, 0);
+
+    if (b <= 0 && a >= 0)
+    {
+        b = abs(b);
+        if (a % 2 != 0 && b % 2 != 0)
+            NO;
+        else
+            YES;
+    }
+    else
+        NO;
 }
+
 main()
 {
 #ifndef ONLINE_JUDGE
     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
 #endif
-
     NFS;
     int t = 1;
     cin >> t;

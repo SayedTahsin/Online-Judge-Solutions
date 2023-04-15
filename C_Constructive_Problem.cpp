@@ -159,7 +159,39 @@ int MEX(vector<int> &v)
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    fore(v) cin >> x;
+    int m = MEX(v);
+    int ans = m + 1;
+    map<int, vi> mp;
+    for (int i = 0; i < n; i++)
+        mp[v[i]].pb(i);
+
+    if (mp.find(ans) == mp.end())
+    {
+        fore(mp)
+        {
+            if (x.first > m || x.second.size() > 1)
+            {
+                YES;
+                return;
+            }
+        }
+        NO;
+    }
+    else
+    {
+        int a = mp[ans][0], b = mp[ans][mp[ans].size() - 1];
+        for (int i = a; i <= b; i++)
+            v[i] = m;
+        m = MEX(v);
+        if (m == ans)
+            YES;
+        else
+            NO;
+    }
 }
 main()
 {
