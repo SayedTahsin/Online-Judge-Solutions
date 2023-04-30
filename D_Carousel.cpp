@@ -134,7 +134,109 @@ bool is_prime(ll n)
 
 void solve()
 {
-    
+    int n, a;
+    cin >> n;
+    vector<int> v;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a;
+        v.pb(a);
+    }
+    int c = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (v[i] != v[i - 1])
+            c++;
+    }
+    if (c == 0)
+    {
+        cout << 1 << endl;
+        for (int i = 0; i < n; i++)
+            cout << 1 << ' ';
+        cout << endl;
+        return;
+    }
+    if (c % 2 != 0)
+    {
+        int f = 1;
+        vector<int> ans(n);
+        ans[0] = 1;
+        for (int i = 1; i < n; i++)
+        {
+            if (v[i] != v[i - 1])
+                f = !f;
+            if (f)
+                ans[i] = 1;
+            else
+                ans[i] = 2;
+        }
+        cout << 2 << endl;
+        print(ans);
+        cout << endl;
+    }
+    else
+    {
+        int f = 0;
+        for (int i = 1; i < n; i++)
+        {
+            if (v[i] == v[i - 1])
+            {
+                f = 1;
+                break;
+            }
+        }
+        if (f)
+        {
+            vector<int> ans(n);
+            ans[0] = 1;
+            f = 0, c = 0;
+            for (int i = 1; i < n; i++)
+            {
+                if (v[i] == v[i - 1])
+                {
+                    if (c == 0)
+                    {
+                        f = !f;
+                        c = 1;
+                    }
+                }
+                else
+                    f = !f;
+                if (f)
+                    ans[i] = 2;
+                else
+                    ans[i] = 1;
+            }
+            cout << 2 << endl;
+            print(ans);
+            cout << endl;
+        }
+        else
+        {
+            vector<int> ans(n);
+            int f = 0;
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (!f)
+                    ans[i] = 1;
+                else
+                    ans[i] = 2;
+                f = !f;
+            }
+            if (v[0] != v[n - 1])
+            {
+                ans[n - 1] = 3;
+                cout << 3 << endl;
+            }
+            else
+            {
+                ans[n - 1] = ans[0];
+                cout << 2 << endl;
+            }
+            print(ans);
+            cout << endl;
+        }
+    }
 }
 
 main()
@@ -145,7 +247,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }

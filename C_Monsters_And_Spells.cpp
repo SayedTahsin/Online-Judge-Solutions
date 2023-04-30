@@ -131,10 +131,44 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-
+bool cmp(pii A, pii B)
+{
+    if (A.first == B.first)
+        return A.second > B.second;
+    else
+        return A.first < B.first;
+}
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    vector<int> k(n), h(n);
+    vector<pii> v;
+    fore(k) cin >> x;
+    fore(h) cin >> x;
+    for (int i = 0; i < n; i++)
+    {
+        int l = k[i] - h[i] + 1;
+        v.pb({l, k[i]});
+    }
+    sort(all(v), cmp);
+    // fore(v) cout << x.first << ' ' << x.second << endl;
+    int l = v[0].first, r = v[0].second;
+    int ans = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (r < v[i].first)
+        {
+            int x = r - l + 1;
+            ans += (x * (x + 1)) / 2;
+            l = v[i].first, r = v[i].second;
+        }
+        l = min(l, v[i].first), r = max(r, v[i].second);
+    }
+    int x = r - l + 1;
+    ans += (x * (x + 1)) / 2;
+
+    cout << ans << endl;
 }
 
 main()
@@ -145,7 +179,7 @@ main()
 #endif
     NFS;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--)
         solve();
 }

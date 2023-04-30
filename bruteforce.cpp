@@ -131,10 +131,35 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-
+void f(vector<int> v)
+{
+    do
+    {
+        int f = 1;
+        for (int len = 2; len <= v.size(); len++)
+        {
+            for (int i = 0; i <= (int)v.size() - len; i++)
+            {
+                int sum = 0;
+                for (int j = i; j < i + len; j++)
+                {
+                    sum += v[j];
+                }
+                if (sum % len == 0)
+                    f = 0;
+            }
+        }
+        if (f)
+        {
+            print(v);
+            cout << endl;
+        }
+    } while (next_permutation(v.begin(), v.end()));
+}
 void solve()
 {
-    
+    vector<int> v = {1, 2, 3};
+    f(v);
 }
 
 main()

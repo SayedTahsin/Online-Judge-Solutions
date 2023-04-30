@@ -176,9 +176,11 @@ string shiftStringLeft(string s, int c)
 }
 //!-------------------------------------------
 
+//! enclusion-exclusion
 void solve()
 {
     
+
 }
 main()
 {
@@ -189,7 +191,7 @@ main()
 
     NFS;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         solve();
 }

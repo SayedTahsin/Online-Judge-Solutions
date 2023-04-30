@@ -134,7 +134,46 @@ bool is_prime(ll n)
 
 void solve()
 {
-    
+    int a, b, c;
+    cin >> a >> b >> c;
+    vector<int> v1(a), v2(b), v3(c);
+    fore(v1) cin >> x;
+    fore(v2) cin >> x;
+    fore(v3) cin >> x;
+    int mx = a + b + c;
+    int xtra = mx - a;
+    while (xtra--)
+        v1.push_back(-INF);
+    xtra = mx - b;
+    while (xtra--)
+        v2.push_back(-INF);
+    xtra = mx - c;
+    while (xtra--)
+        v3.push_back(-INF);
+
+    sort(rall(v1));
+    sort(rall(v2));
+    sort(rall(v3));
+    print(v1);
+    cout << endl;
+    print(v2);
+    cout << endl;
+    print(v3);
+    cout << endl;
+    int x = 0, y = 0, z = 0;
+    int ans = 0;
+    for (int i = 0; i < mx; i++)
+    {
+        int mx = max({v1[x], v2[y], v3[z]});
+        int c=0;
+        if(mx==v1[x])c++; 
+        if(mx==v2[y])c++; 
+        if(mx==v3[y])c++;
+        if(c==3){
+            
+        } 
+    }
+    cout << ans << endl;
 }
 
 main()

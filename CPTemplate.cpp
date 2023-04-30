@@ -482,6 +482,41 @@ bool ThreeSum(vector<int> &v, int target)
 }
 //!-----------------
 
+int MEX(vector<int> &v)
+{
+    set<int> s;
+    fore(v) s.insert(x);
+    int m = 0;
+    fore(s)
+    {
+        if (x == m)
+            m++;
+        else
+            break;
+    }
+    return m;
+}
+string shiftStringRight(string s, int c)
+{
+    string x;
+    for (int i = s.length() - c; i < s.length(); i++)
+        x += s[i];
+    for (int i = 0; i < s.length() - c; i++)
+        x += s[i];
+    return x;
+}
+
+string shiftStringLeft(string s, int c)
+{
+    string x;
+    for (int i = c; i < s.length(); i++)
+        x += s[i];
+    for (int i = 0; i < c; i++)
+        x += s[i];
+    return x;
+}
+//!-----------------------------
+
 void solve()
 {
 }

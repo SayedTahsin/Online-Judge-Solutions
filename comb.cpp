@@ -131,10 +131,29 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-
+string s;
+void f(int i)
+{
+    if (i == s.length())
+    {
+        cout << s << endl;
+        return;
+    }
+    for (int j = i; j < s.length(); j++)
+    {
+        swap(s[j], s[i]);
+        f(i + 1);
+        swap(s[j], s[i]);
+    }
+}
 void solve()
 {
-    
+    s = "abc";
+
+    while (next_permutation(s.begin(), s.end()))
+    {
+        cout << s << endl;
+    }
 }
 
 main()
