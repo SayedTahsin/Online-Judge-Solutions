@@ -132,48 +132,45 @@ bool is_prime(ll n)
     return true;
 }
 
+vector<int> v1, v2, v3;
+int a, b, c;
+int dp[201][201][201];
+int f(int i, int j, int k)
+{
+
+    int A = 0, B = 0, C = 0;
+
+    if (dp[i][j][k] != -1)
+        return dp[i][j][k];
+
+    if (i < a && j < b)
+        A = f(i + 1, j + 1, k) + v1[i] * v2[j];
+    if (i < a && k < c)
+        B = f(i + 1, j, k + 1) + v1[i] * v3[k];
+    if (j < b && k < c)
+        C = f(i, j + 1, k + 1) + v2[j] * v3[k];
+
+    return dp[i][j][k] = max({A, B, C});
+}
 void solve()
 {
-    int a, b, c;
+    FILL(dp, -1);
+    
     cin >> a >> b >> c;
-    vector<int> v1(a), v2(b), v3(c);
+
+    v1.resize(a);
+    v2.resize(b);
+    v3.resize(c);
+
     fore(v1) cin >> x;
     fore(v2) cin >> x;
     fore(v3) cin >> x;
-    int mx = a + b + c;
-    int xtra = mx - a;
-    while (xtra--)
-        v1.push_back(-INF);
-    xtra = mx - b;
-    while (xtra--)
-        v2.push_back(-INF);
-    xtra = mx - c;
-    while (xtra--)
-        v3.push_back(-INF);
 
     sort(rall(v1));
     sort(rall(v2));
     sort(rall(v3));
-    print(v1);
-    cout << endl;
-    print(v2);
-    cout << endl;
-    print(v3);
-    cout << endl;
-    int x = 0, y = 0, z = 0;
-    int ans = 0;
-    for (int i = 0; i < mx; i++)
-    {
-        int mx = max({v1[x], v2[y], v3[z]});
-        int c=0;
-        if(mx==v1[x])c++; 
-        if(mx==v2[y])c++; 
-        if(mx==v3[y])c++;
-        if(c==3){
-            
-        } 
-    }
-    cout << ans << endl;
+
+    cout << f(0, 0, 0) << endl;
 }
 
 main()
