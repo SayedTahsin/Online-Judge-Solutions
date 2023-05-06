@@ -1,151 +1,78 @@
-//*Bismillahir Rahmanir Raheem
-//! BlackBeard
+/// Bismillahir Rahmanir Raheem
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#define NFS ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+#include <algorithm>
 using namespace std;
 
-using namespace __gnu_pbds;
-template <typename DT>
-using oset = tree<DT, null_type, less<DT>, rb_tree_tag, tree_order_statistics_node_update>;
-template <typename DT, typename FUNC>
-using o_set = tree<DT, null_type, FUNC, rb_tree_tag, tree_order_statistics_node_update>;
-template <typename DT1, typename DT2>
-using omap = tree<DT1, DT2, less<DT1>, rb_tree_tag, tree_order_statistics_node_update>;
-template <typename DT1, typename DT2, typename FUNC>
-using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_update>;
+string a, b;
+int n, m;
+int dp[3000][3000];
+int dr[3000][3000];
+int f(int i, int j)
+{
+    if (i == n || j == m)
+        return 0;
 
-//!------
-#define ndl "\n"
-#define YES cout << "YES\n"
-#define Yes cout << "Yes\n"
-#define yes cout << "yes\n"
-#define No cout << "No\n"
-#define NO cout << "NO\n"
-#define no cout << "no\n"
-//!-----
-#define ll long long
-#define int ll
-// #define double long double
-#define ull unsigned long long
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define vi vector<int>
-#define vl vector<ll>
-#define vii vector<pii>
-#define vll vector<pll>
-#define pb push_back
-#define ff first
-#define ss second
-//!--------
-#define PQiimn priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>
-#define PQllmn priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>>
-#define PQiimx priority_queue<pair<int, int>>
-#define PQllmx priority_queue<pair<ll, ll>>
-#define PQ priority_queue<int>
-#define PQmn priority_queue<int, greater<int>>
-//!--------
-#define FILL(x, y) memset(x, y, sizeof(x))
-#define clr(x, y) memset(x, 0, sizeof(x))
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend()
-#define fore(arr) for (auto &x : (arr))
-#define max3(a, b, c) max(a, max(b, c))
-#define min3(a, b, c) min(a, min(b, c))
-#define gcd(x, y) __gcd(x, y)
-#define lcm(x, y) x *(y / gcd(x, y))
-#define preci(x) fixed << setprecision(x)
-#define PI (acos(-1.0))
-#define SZ(x) (int)x.size()
-#define bug cout << "*_*\n"
-//!-------
-#define EPS (1e-6)
-const ll INF = 1e18 + 5;
-const ll MOD = 1e9 + 7;
-bool equalTo(double a, double b) { return ((fabs(a - b) <= EPS) ? true : false); }
-bool notEqual(double a, double b) { return ((fabs(a - b) > EPS) ? true : false); }
-bool lessThan(double a, double b) { return ((a + EPS < b) ? true : false); }
-bool lessThanEqual(double a, double b) { return ((a < b + EPS) ? true : false); }
-bool greaterThan(double a, double b) { return ((a > b + EPS) ? true : false); }
-bool greaterThanEqual(double a, double b) { return ((a + EPS > b) ? true : false); }
-bool negzero(double a) { return (a < EPS) ? true : false; }
-//!-------
-ll POW(ll b, ll p)
-{
-    ll r = 1;
-    for (int i = 0; i < p; i++)
-        r *= b;
-    return r;
-}
-ll bin_expo(ll a, ll b)
-{
-    ll s = 1;
-    while (b > 0)
+    if (dp[i][j] != -1)
+        return dp[i][j];
+
+    int ret;
+    if (a[i] == b[j])
     {
-        if (b % 2 == 1)
-            s = ((s % MOD) * (a % MOD)) % MOD;
-        a = ((a % MOD) * (a % MOD)) % MOD, b = b >> 1;
+        ret = 1 + f(i + 1, j + 1);
+        dr[i][j] = 1;
     }
-    return s % MOD;
+    else
+    {
+        int a = f(i + 1, j);
+        int b = f(i, j + 1);
+        if (a > b)
+        {
+            ret = a;
+            dr[i][j] = 2;
+        }
+        else
+        {
+            ret = b;
+            dr[i][j] = 3;
+        }
+    }
+    return dp[i][j] = ret;
 }
-inline ll mod(ll a) { return (a % MOD + MOD) % MOD; }
-inline ll modAdd(ll a, ll b) { return mod(mod(a) + mod(b)); }
-inline ll modSub(ll a, ll b) { return mod(mod(a) - mod(b)); }
-inline ll modMul(ll a, ll b) { return mod(mod(a) * mod(b)); }
-inline ll modInv(ll a) { return bin_expo(a, MOD - 2); }
-//!---------
-// int dx[] = {0, 0, -1, 1};
-// int dy[] = {1, -1, 0, 0};
-// int dxk[] = {-2, -2, -1, -1, 1, 2, 2, 1};
-// int dyk[] = {1, -1, 2, -2, 2, 1, -1, -2};
-// int dx1[] = {0, 1, 1, 1, 0, -1, -1, -1};
-// int dy1[] = {1, 1, 0, -1, -1, -1, 0, 1};
-//!---------
-template <class T>
-inline void print(vector<T> v) { fore(v) cout << x << ' '; }
-template <class T>
-inline void print(set<T> v) { fore(v) cout << x << ' '; }
-template <class T>
-inline void print(multiset<T> v) { fore(v) cout << x << ' '; }
-template <class T, class U>
-inline void print(map<T, U> v) { fore(v) cout << x.ff << ' ' << x.ss << endl; }
-template <class T, class U>
-inline void print(multimap<T, U> v) { fore(v) cout << x.ff << ' ' << x.ss << endl; }
-template <class T>
-inline void print(T u) { cout << '*' << u << '*' << endl; }
-//!---------
-int cs = 1;
-inline void CASE() { cout << "Case #" << cs++ << ": "; }
-inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
-inline int numOfDigit(int n) { return log10(n) + 1; }
-inline int bitsInBinary(int n) { return log2(n) + 1; }
-inline bool iskthbitSet(int a, int k) { return (a & (1 << k)); }
-//!---------
-bool is_prime(ll n)
+string ans;
+void printdr(int i, int j)
 {
-    if (n <= 1)
-        return false;
-    for (ll i = 2; i * i <= n; i++)
-        if (n % i == 0)
-            return false;
-    return true;
-}
+    if (i == n || j == m)
+        return;
 
+    if (dr[i][j] == 1)
+    {
+        ans += a[i];
+        printdr(i + 1, j + 1);
+    }
+    else if (dr[i][j] == 2)
+        printdr(i + 1, j);
+    else if (dr[i][j] == 3)
+        printdr(i, j + 1);
+}
 void solve()
 {
-    
+    memset(dp, -1, sizeof(dp));
+    cin >> a >> b;
+    n = a.length();
+    m = b.length();
+    f(0, 0);
+    printdr(0, 0);
+    cout << ans << endl;
 }
-
-main()
+int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
-    NFS;
+    // #ifndef ONLINE_JUDGE
+    //     freopen("D:/code/C++/OJ/in.txt", "r", stdin);
+    //     freopen("D:/code/C++/OJ/out.txt", "w", stdout);
+    // #endif
     int t = 1;
-    // cin >> t;
     while (t--)
+    {
         solve();
+    }
 }
