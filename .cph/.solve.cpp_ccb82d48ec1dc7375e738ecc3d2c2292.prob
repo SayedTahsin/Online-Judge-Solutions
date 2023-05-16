@@ -1,1 +1,1 @@
-{"name":"Local: solve","url":"d:\\Entertainment\\code\\C++\\OJ\\solve.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Entertainment\\code\\C++\\OJ\\solve.cpp","group":"local","local":true}
+{"name":"Local: solve","url":"d:\\Entertainment\\code\\C++\\OJ\\solve.cpp","tests":[{"id":1683903256524,"input":"1\n5 1\n1 2 3 4 5","output":"12"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Entertainment\\code\\C++\\OJ\\solve.cpp","group":"local","local":true}
