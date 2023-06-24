@@ -57,8 +57,6 @@ using o_map = tree<DT1, DT2, FUNC, rb_tree_tag, tree_order_statistics_node_updat
 #define lcm(x, y) x *(y / gcd(x, y))
 #define preci(x) fixed << setprecision(x)
 #define PI (acos(-1.0))
-#define theta(x) x *acos(-1.0) / 180.0     /// degree to radian
-#define thetainv(x) x * 180.0 / acos(-1.0) /// radian to degree
 #define SZ(x) (int)x.size()
 #define bug cout << "*_*\n"
 //!-------
@@ -97,8 +95,8 @@ inline ll modSub(ll a, ll b) { return mod(mod(a) - mod(b)); }
 inline ll modMul(ll a, ll b) { return mod(mod(a) * mod(b)); }
 inline ll modInv(ll a) { return bin_expo(a, MOD - 2); }
 //!---------
-int dx[] = {0, 0, -1, 1};
-int dy[] = {1, -1, 0, 0};
+// int dx[] = {0, 0, -1, 1};
+// int dy[] = {1, -1, 0, 0};
 // int dxk[] = {-2, -2, -1, -1, 1, 2, 2, 1};
 // int dyk[] = {1, -1, 2, -2, 2, 1, -1, -2};
 // int dx1[] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -133,60 +131,42 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-bool is_pel(string s)
-{
-    ll n = s.length() - 1;
-    for (int i = 0; i < s.length() / 2; i++, n--)
-        if (s[i] != s[n])
-            return false;
-    return true;
-}
-int MEX(vector<int> &v)
-{
-    set<int> s;
-    fore(v) s.insert(x);
-    int m = 0;
-    fore(s)
-    {
-        if (x == m)
-            m++;
-        else
-            break;
-    }
-    return m;
-}
-string shiftStringRight(string s, int c)
-{
-    string x;
-    for (int i = s.length() - c; i < s.length(); i++)
-        x += s[i];
-    for (int i = 0; i < s.length() - c; i++)
-        x += s[i];
-    return x;
-}
-
-string shiftStringLeft(string s, int c)
-{
-    string x;
-    for (int i = c; i < s.length(); i++)
-        x += s[i];
-    for (int i = 0; i < c; i++)
-        x += s[i];
-    return x;
-}
-//!-------------------------------------------
 
 void solve()
 {
-    
+    int n, m;
+    cin >> n >> m;
+    vector<int> v(m);
+    fore(v) cin >> x;
+    int ans = 0;
+    for (int mask = 1; mask < (1 << m); mask++)
+    {
+        int c = 0;
+        int l = 1;
+        for (int i = 0; i < m; i++)
+        {
+            if (mask & (1 << i))
+            {
+                c++;
+                l = lcm(l, v[i]);
+            }
+        }
+
+        if (c % 2 == 0)
+            ans -= (n / l);
+        else
+            ans += (n / l);
+    }
+    CASE();
+    cout << n - ans << endl;
 }
+
 main()
 {
 #ifndef ONLINE_JUDGE
     freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
     freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
 #endif
-
     NFS;
     int t = 1;
     cin >> t;
