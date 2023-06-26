@@ -116,7 +116,7 @@ template <class T>
 inline void print(T u) { cout << '*' << u << '*' << endl; }
 //!---------
 int cs = 1;
-inline void CASE() { cout << "Case " << cs++ << ": "; }
+inline void CASE() { cout << "Case #" << cs++ << ": "; }
 inline int ciel(double a, double b) { return (a + (b - 1)) / b; }
 inline int numOfDigit(int n) { return log10(n) + 1; }
 inline int bitsInBinary(int n) { return log2(n) + 1; }
@@ -131,35 +131,30 @@ bool is_prime(ll n)
             return false;
     return true;
 }
-int f(int n)
-{
-    return (n * (n - 1) * (n - 2) * (n - 3)) / 24;
-}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> div_cnt(10005);
-    for (int i = 0; i < n; i++)
+    int a, b, c, k;
+    cin >> a >> b >> c >> k;
+    int mina = POW(10, a - 1), maxa = POW(10, a) - 1;
+    int minb = POW(10, b - 1), maxb = POW(10, b) - 1;
+    int minc = POW(10, c - 1), maxc = POW(10, c) - 1;
+    for (int i = mina; i <= maxa; i++)
     {
-        int x;
-        cin >> x;
-        for(int j=1;j*j<=x;j++){
-            if(x%j==0){
-                div_cnt[j]++;
-                if(j*j!=x)div_cnt[x/j]++;
-            }
+        int x = max(minb, minc - i);
+        int y = min(maxb, maxc - i);
+        // cout << x << ' ' << y << endl;
+        if (x > y)
+            continue;
+        int range = y - x + 1;
+        if (k <= range)
+        {
+            cout << i << " + " << x + k - 1 << " = " << i + x + k - 1 << endl;
+            return;
         }
+        k -= range;
     }
-    vector <ll> ans(10005);
-    for(int i = 10000; i >= 1; --i) {
-            ans[i] = f(div_cnt[i]);
-            for(int j = i+i; j <= 10000; j += i) {
-                ans[i] -= ans[j];
-            }
-        }
-    CASE();
-    cout<<ans[1]<<endl;
+    cout << -1 << endl;
 }
 
 main()
