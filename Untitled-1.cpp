@@ -1,14 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-
-
+#define ll long long
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
-
-    cout << f(5);
+    int n;
+    cin >> n;
+    int arr[n];
+    memset(arr, -1, sizeof(arr));
+    for (ll i = 0; i < n; i++)
+    {
+        ll x = i * i;
+        x = x % n;
+        arr[x] = i;
+    }
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << ' ';
+    cout << endl;
 }
