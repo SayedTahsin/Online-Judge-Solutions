@@ -178,7 +178,10 @@ string shiftStringLeft(string s, int c)
 
 void solve()
 {
-    
+
+    string s;
+    cin >> s;
+    cout << preFix(s);
 }
 main()
 {

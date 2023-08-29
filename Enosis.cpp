@@ -1,8 +1,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class Node
+{
+public:
+    int val;
+    Node *next;
+    Node(int val)
+    {
+        this->val = val;
+        next = NULL;
+    }
+};
+
+void insertAtTail(Node *&head, int value)
+{
+    Node *newNode = new Node(value);
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+void insertAtHead(Node *&head, int val)
+{
+    Node *newNode = new Node(val);
+
+    newNode->next = head;
+    head = newNode;
+}
+
+void Display(Node *head)
+{
+    while (head)
+    {
+        cout << head->val << ' ';
+        head = head->next;
+    }
+    cout << endl;
+}
+bool search(Node *head, int key)
+{
+    while (head->next != NULL)
+    {
+        if (head->val == key)
+        {
+            return true;
+        }
+        head = head->next;
+    }
+    return false;
+}
+void deletion(Node *head, int data)
+{
+    if (head->val == data)
+    {
+        Node *todelete = head;
+        head = head->next;
+        delete head;
+        return;
+    }
+
+    Node *temp = head;
+    while (temp->next != NULL && temp->next->val != data)
+    {
+        temp = temp->next;
+    }
+    if (temp->next == NULL)
+        return;
+
+    Node *todelete = temp->next;
+    temp->next = temp->next->next;
+    delete todelete;
+}
+
 int main()
 {
+
+    //! LinkedList
+
+    Node *head = new Node(5);
+    insertAtTail(head, 12);
+    insertAtTail(head, 1);
+    insertAtTail(head, 90);
+    insertAtTail(head, 220);
+    insertAtHead(head, 11);
+    Display(head);
+    cout << search(head, 6) << endl;
+    deletion(head, 6);
+    Display(head);
+
     //! Find the second max Element in a Array with only one loop
     // int arr[11] = {1, 4, 5, 3, 5, 2, 6, 2, 1, 6, 7};
 
@@ -58,7 +152,7 @@ int main()
     //     cout << NewArr[i] << ' ';
     // cout << endl;
 
-    //! Given an array of numbers. Calculate the absolute difference between sum of odd elements and even elements
+    // //! Given an array of numbers. Calculate the absolute difference between sum of odd elements and even elements
     // int n = 5;
     // int arr[n] = {1, 7, 8, 11, 22};
 
@@ -88,7 +182,7 @@ int main()
     // sum -= mx;
     // cout << fixed << setprecision(20) << (double)sum / (n - 2) << endl;
 
-    //! Counting the number of digits of a number
+    // //! Counting the number of digits of a number
     // int n = 12354;
     // cout << (int)log10(n) + 1 << endl;
     // int ans = 1;
@@ -185,16 +279,16 @@ int main()
     //     cout << "NO";
 
     //! Print repeating elements in an array
-    // int arr[5] = {1, 2, 2, 4, 4};
+    int arr[5] = {1, 2, 2, 4, 4};
 
-    // map<int, int> mp;
-    // for (int i = 0; i < 5; i++)
-    //     mp[arr[i]]++;
-    // for (auto &x : mp)
-    // {
-    //     if (x.second > 1)
-    //         cout << x.first << endl;
-    // }
+    map<int, int> mp;
+    for (int i = 0; i < 5; i++)
+        mp[arr[i]]++;
+    for (auto &x : mp)
+    {
+        if (x.second > 1)
+            cout << x.first << endl;
+    }
 
     //! print 1,2,3 ... 10, 9, 8 ...1 with a single for loop.
     // int x = 1, flag = 1;
@@ -211,7 +305,7 @@ int main()
     //         x -= 2;
     //     }
     // }
-    //-----------------------------
+    //!-----------------------------
     // int flag = 1;
     // for (int i = 1; i;)
     // {
@@ -392,6 +486,89 @@ int main()
     // }
     // cout << endl;
 
+    //! Given a string. Divide it into several lines and align the lines in the middle of the screen
+    string s = "Hello I am Sayed Tahsin. And I am preparing for my interview in Enosis. That is why I have listed all interview questions from glassdoor.";
+    int l = 40;
+    vector<string> words;
+    string tmp;
+    for (int i = 0; s[i]; i++)
+    {
+        if (s[i] != ' ')
+            tmp += s[i];
+        if (s[i] == ' ' || i == s.length() - 1)
+        {
+            words.push_back(tmp);
+            tmp.clear();
+        }
+    }
 
+    vector<string> lines;
+    for (int i = 0; i < words.size(); i++)
+    {
+        int x = tmp.length() + words[i].length();
+        if (x <= l)
+        {
+            tmp += words[i];
+            if (tmp.length() != l)
+                tmp += ' ';
+        }
+        else
+        {
+            lines.push_back(tmp);
+            tmp = words[i];
+            if (tmp.length() != l)
+                tmp += ' ';
+        }
+    }
+    lines.push_back(tmp);
+    //! center align
+    for (int i = 0; i < lines.size(); i++)
+    {
+        int rem = l - lines[i].length();
+        string dumm((rem + 1) / 2, ' ');
+        lines[i] = dumm + lines[i];
+    }
 
+    //! justify align
+    for (int i = 0; i < lines.size(); i++)
+    {
+        vector<string> word;
+        s = lines[i];
+        tmp.clear();
+        int rem = l;
+        for (int j = 0; s[j]; j++)
+        {
+            if (s[j] != ' ')
+            {
+                tmp += s[j];
+                rem--;
+            }
+            if (s[j] == ' ' || s.length() - 1 == j)
+            {
+                word.push_back(tmp);
+                tmp.clear();
+            }
+        }
+        lines[i].clear();
+        int x = rem % (word.size() - 1);
+        for (int j = 0; j < word.size() - 1; j++)
+        {
+            lines[i] += word[j];
+            if (j < x)
+            {
+                int y = (rem + word.size() - 2) / (word.size() - 1);
+                while (y--)
+                    lines[i] += ' ';
+            }
+            else
+            {
+                int y = rem / (word.size() - 1);
+                while (y--)
+                    lines[i] += ' ';
+            }
+        }
+        lines[i] += word[word.size() - 1];
+    }
+    for (auto x : lines)
+        cout << x << endl;
 }

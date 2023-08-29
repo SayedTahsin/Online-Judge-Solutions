@@ -26,7 +26,8 @@
 			"random": "cpp",
 			"iosfwd": "cpp",
 			"cmath": "cpp",
-			"iomanip": "cpp"
+			"iomanip": "cpp",
+			"sstream": "cpp"
 		}
 	}
 }
