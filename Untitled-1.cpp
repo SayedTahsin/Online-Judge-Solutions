@@ -1,14 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
+class singleDigit
+{
+    int n;
 
+public:
+    bool isSingle_Digit()
+    {
+        return n <= 9;
+    }
+    singleDigit(int value)
+    {
+        n = value;
+    }
+    void updateValue()
+    {
+        int m = 0;
+        while (n)
+        {
+            m += n % 10;
+            n /= 10;
+        }
+        n = m;
+    }
+    int getValue()
+    {
+        return n;
+    }
+};
 int main()
 {
-
-#ifndef ONLINE_JUDGE
-    freopen("D:/Entertainment/code/C++/OJ/in.txt", "r", stdin);
-    freopen("D:/Entertainment/code/C++/OJ/out.txt", "w", stdout);
-#endif
-
-    
-
+    int n;
+    cin >> n;
+    singleDigit newObject(n);
+    while (!newObject.isSingle_Digit())
+    {
+        newObject.updateValue();
+    }
+    cout << newObject.getValue() << endl;
 }
