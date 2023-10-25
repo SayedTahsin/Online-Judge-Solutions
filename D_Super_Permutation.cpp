@@ -178,7 +178,37 @@ string shiftStringLeft(string s, int c)
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    if (n == 1)
+    {
+        cout << 1 << endl;
+    }
+    else if (n % 2 != 0)
+    {
+        cout << -1 << endl;
+    }
+    else
+    {
+        vector<int> v(n);
+        int i = 0, j = n - 1;
+        int a = n, b = 1;
+        for (int i = 0; i < n / 2; i++, j--)
+        {
+            if (i % 2 == 0)
+            {
+                v[i] = a--;
+                v[j] = a--;
+            }
+            else
+            {
+                v[i] = b++;
+                v[j] = b++;
+            }
+        }
+        print(v);
+        cout << endl;
+    }
 }
 main()
 {

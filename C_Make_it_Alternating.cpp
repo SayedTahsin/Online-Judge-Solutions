@@ -175,10 +175,27 @@ string shiftStringLeft(string s, int c)
     return x;
 }
 //!-------------------------------------------
-
+int fact[200005];
 void solve()
 {
-    
+    string s;
+    cin >> s;
+    int ans = 1, l = 0;
+
+    for (int i = 0; s[i]; i++)
+    {
+        int j = i;
+        while (j < s.length() && s[j] == s[i])
+        {
+            j++;
+        }
+        int x = j - i;
+        ans = (ans * x) % 998244353;
+        l++;
+        i = j - 1;
+    }
+    ans = (ans * fact[((int)s.length() - l)]) % 998244353;
+    cout << (int)s.length() - l << ' ' << ans << endl;
 }
 main()
 {
@@ -189,6 +206,11 @@ main()
 #endif
 
     NFS;
+    fact[0] = 1;
+    for (int i = 1; i < 200005; i++)
+    {
+        fact[i] = (fact[i - 1] * i) % 998244353;
+    }
     int t = 1;
     cin >> t;
     while (t--)
